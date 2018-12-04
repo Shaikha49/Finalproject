@@ -1,0 +1,53 @@
+<html>
+	<head>
+		<title>Courses</title>
+	</head>
+
+	<body>
+
+		<div id="coursesCount"> </div>
+		<div id="coursesDiv"> </div>
+
+        <br />
+
+        <div align="center">
+            <a href="AddCourse.html">Add new course</a> (using POST to /courses)
+            <br />
+            <a href="UpdateCourse.html">Update course</a> (using PUT to /courses)
+            <br />
+            <a href="DeleteCourse.html">Delete course</a> (using DELETE to /courses)
+        </div>
+
+        <script>
+			function handleResponse() {
+  				console.log(this.responseText);
+
+  				let coursessDiv = document.getElementById("coursesDiv");
+  				//convert responseText to a JS object
+  				let jsonArray = JSON.parse(this.responseText);
+
+  				let coursesCount = document.getElementById("coursesCount");
+  				itemsCount.innerHTML = "We have found " +jsonArray.length + " courses!";
+
+  				let counter = 0;
+  				for (let student of jsonArray) {
+  					let span = document.createElement("span");
+                      let courseString = ++counter +". "+courses.courses_name + " - " + courses.courses_code + " - " + courses.teacher;
+  					let spanText = document.createTextNode(courseString);
+  					span.appendChild(spanText);
+
+  					
+                    coursesDiv.appendChild(span);
+                    coursesDiv.appendChild(document.createElement("br"));  
+  				}
+			}
+
+			let httpRequest = new XMLHttpRequest();
+			httpRequest.addEventListener("load", handleResponse);
+			httpRequest.open("GET", "http://localhost:7979/");
+			httpRequest.send();
+		</script>
+
+	</body>
+
+</html>

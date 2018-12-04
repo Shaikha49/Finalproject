@@ -1,0 +1,55 @@
+<html>
+	<head>
+		<title>Students</title>
+	</head>
+
+	<body>
+
+        <h3>Example Students Application with express.js + mongodb and web pages (using REST and XHR).</h3>
+		<div id="studentsCount"> </div>
+		<div id="studentsDiv"> </div>
+
+        <br />
+
+        <div align="center">
+            <a href="AddStudent.html">Add new student</a> (using POST to /students)
+            <br />
+            <a href="UpdateStudent.html">Update student</a> (using PUT to /students)
+            <br />
+            <a href="DeleteStudent.html">Delete student</a> (using DELETE to /students)
+        </div>
+
+        <script>
+			function handleResponse() {
+  				console.log(this.responseText);
+
+  				let studentsDiv = document.getElementById("studentsDiv");
+  				//convert responseText to a JS object
+  				let jsonArray = JSON.parse(this.responseText);
+
+  				let studentsCount = document.getElementById("studentsCount");
+  				itemsCount.innerHTML = "We have found " +jsonArray.length + " students!";
+
+  				let counter = 0;
+  				for (let student of jsonArray) {
+  					let span = document.createElement("span");
+                      let studentString = ++counter +". "+student.student_name + " - " + student.student_id + " - " + student.year  
+                                        +student.GPA.toFixed(2);
+  					let spanText = document.createTextNode(studentString);
+  					span.appendChild(spanText);
+
+  					//add the p to the itemsDiv
+                    studentsDiv.appendChild(span);
+                    studentsDiv.appendChild(document.createElement("br"));  
+  				}
+			}
+
+			let httpRequest = new XMLHttpRequest();
+			httpRequest.addEventListener("load", handleResponse);
+			httpRequest.open("GET", "http://localhost:7979/");
+			httpRequest.send();
+		</script>
+
+	</body>
+
+</html>

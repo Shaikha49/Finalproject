@@ -1,0 +1,51 @@
+<html>
+<head>
+	<title>Delete Spring Course</title>
+</head>
+
+</body>
+<div align="center">
+	<h4>Delete Fall Course </h4>
+
+	<h4>Using HTTP DELETE method to route <code>/springregister</code></h4>
+</div>
+
+
+<form id="deletespringregisterForm" action="/springregister?_method=DELETE" method="POST">
+
+  Enter student id: <input type="text" name="students_id"><br>
+  
+  <input type="button" value="Load Spring Course Data" onclick="loadData()"/>
+  &nbsp;&nbsp;&nbsp;
+  <input type="submit" value="Delete Spring Course" />
+</form>
+
+<script>
+        function handleResponse() {
+            console.log(this.responseText);
+    
+            let deleteForm = document.getElementById("deletespringregisterForm");
+    
+            //convert responseText to a JS object
+            let jsonArray = JSON.parse(this.responseText);
+    
+            if (jsonArray.length == 0) {
+              alert("No data found for Spring Course " + updateForm.elements["student_id"].value);
+              return;
+            }
+            
+        }
+    
+        //load the item data from server
+        function loadData() {
+            let updateForm = document.getElementById("deletespringregisterForm");
+            let student id = updateForm.elements["student_id"].value;
+    
+            let httpRequest = new XMLHttpRequest();
+            httpRequest.addEventListener("load", handleResponse);
+            httpRequest.open("GET", "http://localhost:7979/springregister/"+student_id);
+            httpRequest.send();
+        }
+      </script>
+</body>
+</html> 

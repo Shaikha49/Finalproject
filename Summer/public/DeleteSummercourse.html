@@ -1,0 +1,51 @@
+<html>
+<head>
+	<title>Delete Summer Course</title>
+</head>
+
+</body>
+<div align="center">
+	<h4>Delete Summer Course </h4>
+
+	<h4>Using HTTP DELETE method to route <code>/summerregister</code></h4>
+</div>
+
+
+<form id="deletesummerregisterForm" action="/summerregister?_method=DELETE" method="POST">
+
+  Enter student id: <input type="text" name="students_id"><br>
+  
+  <input type="button" value="Load Summer Course Data" onclick="loadData()"/>
+  &nbsp;&nbsp;&nbsp;
+  <input type="submit" value="Delete Summer Course" />
+</form>
+
+<script>
+        function handleResponse() {
+            console.log(this.responseText);
+    
+            let deleteForm = document.getElementById("deletesummerregisterForm");
+    
+            //convert responseText to a JS object
+            let jsonArray = JSON.parse(this.responseText);
+    
+            if (jsonArray.length == 0) {
+              alert("No data found for Summer Course " + updateForm.elements["student_id"].value);
+              return;
+            }
+            
+        }
+    
+        //load the item data from server
+        function loadData() {
+            let updateForm = document.getElementById("deletesummerregisterForm");
+            let student id = updateForm.elements["student_id"].value;
+    
+            let httpRequest = new XMLHttpRequest();
+            httpRequest.addEventListener("load", handleResponse);
+            httpRequest.open("GET", "http://localhost:7979/summerregister/"+student_id);
+            httpRequest.send();
+        }
+      </script>
+</body>
+</html> 

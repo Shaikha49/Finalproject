@@ -1,0 +1,42 @@
+<html>
+	<head>
+		<title>Courses</title>
+	</head>
+
+	<body>
+
+		<div id="coursesCount"> </div>
+		<div id="coursesDiv"> </div>
+
+		<script>
+			function handleResponse() {
+  				console.log(this.responseText);
+
+  				let coursesDiv = document.getElementById("coursesDiv");
+  				//convert responseText to a JS object
+  				let jsonArray = JSON.parse(this.responseText);
+
+  				let coursesCount = document.getElementById("coursesCount");
+  				itemsCount.innerHTML = "We have found " +jsonArray.length + " courses!";
+
+  				let counter = 0;
+  				for (let student of jsonArray) {
+  					let p = document.createElement("p");
+  					let courseString = counter+ ". "+courses.courses_name +courses.courses_code;
+  					let pText = document.createTextNode(courseString);
+  					p.appendChild(pText);
+
+  					//add the p to the coursesDiv
+  					coursesDiv.appendChild(p);
+  				}
+			}
+
+			let httpRequest = new XMLHttpRequest();
+			httpRequest.addEventListener("load", handleResponse);
+			httpRequest.open("GET", "http://localhost:7979/micros");
+			httpRequest.send();
+		</script>
+
+	</body>
+
+</html>

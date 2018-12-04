@@ -1,0 +1,55 @@
+<html>
+	<head>
+		<title>Spring Course</title>
+	</head>
+
+	<body>
+
+        <h3>Example Students Application with express.js + mongodb and web pages (using REST and XHR).</h3>
+		<div id="springregisterCount"> </div>
+		<div id="springregisterDiv"> </div>
+
+        <br />
+
+        <div align="center">
+            <a href="AddSpringcourse.html">Add new Spring course</a> (using POST to /springregister)
+            <br />
+            <a href="UpdateSpringcourse.html">Update Spring course</a> (using PUT to /springregister)
+            <br />
+            <a href="DeleteSpringcourse.html">Delete Spring course</a> (using DELETE to /springregister)
+        </div>
+
+        <script>
+			function handleResponse() {
+  				console.log(this.responseText);
+
+  				let springregisterDiv = document.getElementById("springregisterDiv");
+  				//convert responseText to a JS object
+  				let jsonArray = JSON.parse(this.responseText);
+
+  				let springregisterCount = document.getElementById("springregisterCount");
+  				springregisterCount.innerHTML = "We have found " +jsonArray.length + " Spring course!";
+
+  				let counter = 0;
+  				for (let student of jsonArray) {
+  					let span = document.createElement("span");
+                      let studentString = ++counter +". "+student.student_name + " - " + student.student_id + " - " + student.course_id  
+                                        +student.time + student.day + student.bulding;
+  					let spanText = document.createTextNode(studentString);
+  					span.appendChild(spanText);
+
+  					//add the p to the itemsDiv
+                    springregisterDiv.appendChild(span);
+                    springregisterDiv.appendChild(document.createElement("br"));  
+  				}
+			}
+
+			let httpRequest = new XMLHttpRequest();
+			httpRequest.addEventListener("load", handleResponse);
+			httpRequest.open("GET", "http://localhost:7979/");
+			httpRequest.send();
+		</script>
+
+	</body>
+
+</html>

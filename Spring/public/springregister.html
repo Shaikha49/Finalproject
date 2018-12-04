@@ -1,0 +1,42 @@
+<html>
+	<head>
+		<title>Spring register</title>
+	</head>
+
+	<body>
+
+		<div id="springregisterCount"> </div>
+		<div id="springregisterDiv"> </div>
+
+		<script>
+			function handleResponse() {
+  				console.log(this.responseText);
+
+  				let springregisterDiv = document.getElementById("springregisterDiv");
+  				//convert responseText to a JS object
+  				let jsonArray = JSON.parse(this.responseText);
+
+  				let springregisterCount = document.getElementById("springregisterCount");
+  				springregisterCount.innerHTML = "We have found " +jsonArray.length + " Spring course!";
+
+  				let counter = 0;
+  				for (let student of jsonArray) {
+  					let p = document.createElement("p");
+  					let studentString = counter+ ". "+student.student_name +student.student_id;
+  					let pText = document.createTextNode(studentString);
+  					p.appendChild(pText);
+
+  					//add the p to the itemsDiv
+  					springregisterDiv.appendChild(p);
+  				}
+			}
+
+			let httpRequest = new XMLHttpRequest();
+			httpRequest.addEventListener("load", handleResponse);
+			httpRequest.open("GET", "http://localhost:7979/day");
+			httpRequest.send();
+		</script>
+
+	</body>
+
+</html>
